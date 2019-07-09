@@ -102,7 +102,7 @@ if __name__=="__main__":
     #         print(param.data)
 
 
-    # Instead of above, pytorch has optim method to update weight.
+    # Instead of above code, pytorch has optim method to update weight.
     import torch.optim as optim 
 
     # create optimizer
