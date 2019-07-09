@@ -10,11 +10,11 @@ class Net(nn.Module):
         super(Net, self).__init__()
 
         # nn.Conv2d(input_dim, output_dim, 
-        #     (filter_width, filter_hight),
-        #     (stride_width, stride_hight),
-        #     (padding_width, padding_hight)
+        #     (filter_width, filter_height),
+        #     (stride_width, stride_height),
+        #     (padding_width, padding_height)
         #   )
-        # if you write like below, filter, stride and padding width and hight are equal.
+        # if you write like below, filter, stride and padding width and height are equal.
         # nn.Conv2d(1, 6, 4, 5, 2)
 
         self.conv1 = nn.Conv2d(1, 6, 3)
