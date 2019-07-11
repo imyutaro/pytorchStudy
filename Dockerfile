@@ -16,3 +16,14 @@ RUN pip install --upgrade setuptools
 
 COPY ./req.txt /req.txt
 RUN pip install -r /req.txt
+
+# ENV USER_ID=1000 \
+#     GROUP_ID=1000 \
+#     USER_NAME=user
+ENV USER_NAME=user
+
+RUN useradd -m $USER_NAME
+# groupadd -g $GROUP_ID $USER_NAME && \
+
+
+USER $USER_NAME
