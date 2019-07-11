@@ -104,11 +104,11 @@ if __name__=="__main__":
                 running_loss = 0.0
     print("Finish training")
 
-    torch.save(net.state_dict(), "./net.pt")
+    torch.save(net.state_dict(), "./net/net.pt")
     """
 
     # load network
-    net.load_state_dict(torch.load("net.pt"))
+    net.load_state_dict(torch.load("./net/net.pt"))
 
     # show a few images ground truth
     dataiter = iter(testloader)

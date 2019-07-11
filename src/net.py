@@ -107,12 +107,12 @@ if __name__=="__main__":
 
     # create optimizer
     optimizer = optim.SGD(net.parameters(), lr=1)
-    # training loop
+    # Training loop
     # Set zeros to the gradient buffers of all parameters
     optimizer.zero_grad()
     output = net(input)
     loss = criterion(output, target)
     loss.backward()
-    # Does update
+    # Do update
     optimizer.step() 
 
