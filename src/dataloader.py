@@ -23,7 +23,11 @@ def mnist():
 
     classes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-    return train_dataset, test_dataset, classes
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
+                  '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
+                  '#bcbd22', '#17becf']
+
+    return train_dataset, test_dataset, classes, colors
 
 
 def plot_embeddings(embeddings, targets, xlim=None, ylim=None):
@@ -62,13 +66,12 @@ def imshow(img, i):
 
 
 if __name__=="__main__":
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
-                  '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
-                  '#bcbd22', '#17becf']
 
-    train_dataset, test_dataset, classes = mnist()
+    train_dataset, test_dataset, classes, colors = mnist()
 
     for i, data in enumerate(train_dataset):
         inputs, label = data
-
+        imshow(inputs, i)
+        if i==3:
+            exit(0)
 

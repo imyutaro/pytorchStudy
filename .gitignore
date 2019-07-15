@@ -6,3 +6,4 @@ tmp.*
 *.png
 .*
 !.gitignore
+.python-version
