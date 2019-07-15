@@ -5,5 +5,7 @@ tmp.*
 
 *.png
 .*
-!.gitignore
 .python-version
+
+!output.png
+!.gitignore
