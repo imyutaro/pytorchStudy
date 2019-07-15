@@ -14,9 +14,10 @@ class ContrastiveLoss(nn.Module):
     If x and x' are in same class, t=1 else t=0.
     """
     def __init__(self, margin):
-        super(ConstrastiveLoss, self).__init__()
+        super(ContrastiveLoss, self).__init__()
         self.margin = margin
 
-    def __call__(output1, output2, target1, target2, t=0):
+    def __call__(self, output1, output2, t):
         dis = torch.norm(output1-output2)
         loss = 0.5*t*dis + 0.5*(1-t)*F.relu(self.margin-dis).pow(2)
+        return loss

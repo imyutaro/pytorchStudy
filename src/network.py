@@ -6,8 +6,8 @@ import torch.nn.functional as F
 class Siamese(nn.Module):
     def __init__(self, nItem, mid_dim):
         super(Siamese, self).__init__()
-        self.embed = nn.Linear(nItem, mid_dim)
-        self.fc = nn.Linear(mid_dim, 2)
+        self.embed = nn.Linear(nItem, nItem//4)
+        self.fc = nn.Linear(nItem//4, mid_dim)
 
     def embedding(self, x):
         x = F.relu(self.embed(x))
@@ -19,7 +19,7 @@ class Siamese(nn.Module):
         y2 = self.embedding(x2)
         return y1, y2
 
-    def get_embedding(x):
+    def get_embedding(self, x):
         return self.embedding(x)
         
 

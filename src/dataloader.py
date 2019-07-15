@@ -71,7 +71,7 @@ if __name__=="__main__":
 
     for i, data in enumerate(train_dataset):
         inputs, label = data
-        imshow(inputs, i)
+        # imshow(inputs, i)
         if i==3:
             exit(0)
 
