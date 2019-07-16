@@ -14,7 +14,7 @@ if __name__=="__main__":
 
     # I don't know good margin value.
     net = Siamese(nItem=28*28, mid_dim=2)
-    criterion = ContrastiveLoss(margin=0.2)
+    criterion = ContrastiveLoss(margin=2)
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     # train network
@@ -25,8 +25,8 @@ if __name__=="__main__":
 
             input1, label1 = data
             input2, label2 = trainloader[random.randint(0, len(trainloader)-1)]
-            input1 = input1.reshape(-1)
-            input2 = input2.reshape(-1)
+            input1 = input1.view(-1)
+            input2 = input2.view(-1)
             output1, output2 = net(input1, input2)
             t= 1 if (label1==label2) else 0
 
