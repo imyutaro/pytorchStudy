@@ -11,7 +11,7 @@ class ContrastiveLoss(nn.Module):
     t := \delta(c, c') \in {0, 1}
 
     y is a embedding vector from x and y' is a embedding vector from x'.
-    If x and x' are in same class, t=1 else t=0.
+    If x and x' are in same class(c==c'), t=1 else t=0.
     """
     def __init__(self, margin):
         super(ContrastiveLoss, self).__init__()
@@ -19,5 +19,5 @@ class ContrastiveLoss(nn.Module):
 
     def __call__(self, output1, output2, t):
         dis = torch.norm(output1-output2)
-        loss = 0.5*t*dis + 0.5*(1-t)*F.relu(self.margin-dis).pow(2)
+        loss = 0.5*t*dis.pow(2) + 0.5*(1-t)*F.relu(self.margin-dis).pow(2)
         return loss
