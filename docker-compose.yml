@@ -5,7 +5,7 @@ services:
     restart: always
     build: .
     container_name: 'pytorch'
-    working_dir: '/pytorchStudy/'
+    working_dir: '/home/user/pytorchStudy/'
     tty: true
     volumes:
-      - ./:/pytorchStudy/
+      - ./:/home/user/pytorchStudy/

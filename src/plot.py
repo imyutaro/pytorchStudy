@@ -34,6 +34,8 @@ if __name__=="__main__":
     # load network
     net = ConvSiamese()
     net.load_state_dict(torch.load("./net/convSiamese.pt"))
+    print(color, classes)
+    exit(0)
 
     # plot embedding vector
     with torch.no_grad():
