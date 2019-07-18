@@ -1,5 +1,8 @@
 __pycache__/
-data/
+/data/*
+!/data/assoc/
+/data/assoc/*
+!/data/assoc/basic/
 tmp/
 tmp.*
 

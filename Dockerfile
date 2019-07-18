@@ -25,5 +25,4 @@ ENV USER_NAME=user
 RUN useradd -m $USER_NAME
 # groupadd -g $GROUP_ID $USER_NAME && \
 
-
 USER $USER_NAME

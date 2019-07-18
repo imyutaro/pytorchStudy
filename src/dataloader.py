@@ -1,8 +1,11 @@
 from torchvision.datasets import MNIST
 from torchvision import transforms
+from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+from collections import OrderedDict
+import os
 
 def mnist():
     """
@@ -65,13 +68,55 @@ def imshow(img, i):
     plt.savefig("tmp"+str(i)+".png")
 
 
+class assoc(Dataset):
+    """
+    Load dataset for associoation anlysis.
+    """
+    rootdir="../data/assoc/"
+    def __init__(self, filename):
+        self.filepath = os.path.join(self.rootdir, filename+".dat")
+        with open(self.filepath) as f:
+            self.data = [row.rstrip("\n").split() for row in f]
+
+        """Make item one-hot vector dictionary."""
+        # set is much faster than list!!!
+        self.item= set()
+        for t in self.data:
+            self.item.update(t, self.item)
+
+        self.one_hot_dict = OrderedDict() 
+        for i, d_item in enumerate(self.item):
+            one_hot_vec = np.zeros(len(self.item))
+            one_hot_vec[i] += 1
+            self.one_hot_dict[str(d_item)] = one_hot_vec
+
+    def __len__(self):
+        """Length is the number of transactions."""
+        return len(self.data) 
+
+    def __getitem__(self, idx):
+        return self.one_hot_dict[str(idx)]
+
+    def get_trans(self):
+        """Return transaction data"""
+        return self.data
+
+    def item_len(self):
+        """Return the number of items without duplicate."""
+        return len(self.item)
+
+
 if __name__=="__main__":
 
-    train_dataset, test_dataset, classes, colors = mnist()
+    # train_dataset, test_dataset, classes, colors = mnist()
 
-    for i, data in enumerate(train_dataset):
-        inputs, label = data
-        # imshow(inputs, i)
-        if i==3:
-            exit(0)
+    # for i, data in enumerate(train_dataset):
+    #     inputs, label = data
+    #     # imshow(inputs, i)
+    #     if i==3:
+    #         exit(0)
+    
+    filename = "retail"
+    a = assoc(filename)
+    print(a.item_len())
 
