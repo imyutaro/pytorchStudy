@@ -72,7 +72,7 @@ class assoc(Dataset):
     """
     Load dataset for associoation anlysis.
     """
-    rootdir="../data/assoc/"
+    rootdir="../data/assoc/basic/"
     def __init__(self, filename):
         self.filepath = os.path.join(self.rootdir, filename+".dat")
         with open(self.filepath) as f:
@@ -95,7 +95,7 @@ class assoc(Dataset):
         return len(self.data) 
 
     def __getitem__(self, idx):
-        return self.one_hot_dict[str(idx)]
+        return self.one_hot_dict[idx]
 
     def get_trans(self):
         """Return transaction data"""
@@ -117,6 +117,13 @@ if __name__=="__main__":
     #         exit(0)
     
     filename = "retail"
-    a = assoc(filename)
-    print(a.item_len())
+    retail = assoc(filename)
+    print(retail.item_len())
+    print(len(retail))
+    for i, t in enumerate(retail.get_trans()):
+        for item in t:
+            print(item, retail[item])
+
+        if i==10:
+            exit(0)
 
