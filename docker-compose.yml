@@ -1,11 +1,11 @@
 version: '3'
 services:
   python3:
+    container_name: 'pytorch'
     user: "1000:1000"
     restart: always
     build: .
-    container_name: 'pytorch'
-    working_dir: '/home/user/pytorchStudy/'
+    working_dir: '/home/user/pytorchStudy'
     tty: true
     volumes:
       - ./:/home/user/pytorchStudy/
