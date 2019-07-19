@@ -88,7 +88,7 @@ class assoc(Dataset):
 
         self.one_hot_dict = OrderedDict() 
         for i, d_item in enumerate(self.item):
-            one_hot_vec = np.zeros(len(self.item))
+            one_hot_vec = np.zeros(len(self.item), dtype=np.float64)
             one_hot_vec[i] += 1
             self.one_hot_dict[str(d_item)] = one_hot_vec
 

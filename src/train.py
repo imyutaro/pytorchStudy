@@ -117,40 +117,33 @@ def assoc_siamese(filename, train=False, epoch=3):
 
         # train network
         for epoch in range(3):
-            running_loss=0.0
-            for i, t in enumerate(data.get_trans()):
+            for t in data.get_trans():
+                for i in range(len(t)):
+                    # get data
+                    item1 = t[i]
+                    input1 = torch.from_numpy(data[item1]).float()
+                    for j in range(i+1, len(t)):
+                        # initialize grad to 0.
+                        optimizer.zero_grad()
 
-                # initialize grad to 0.
-                optimizer.zero_grad()
+                        item2 = t[j]
+                        input2 = torch.from_numpy(data[item2]).float()
+                        output1, output2 = net(input1, input2)
 
-                # get data
-                item1 = t[item]
-                input1, label1 = data
-                input2, label2 = trainloader[random.randint(0, len(trainloader)-1)]
-                input1 = input1.view(-1)
-                input2 = input2.view(-1)
-                output1, output2 = net(input1, input2)
-                t= 1 if (label1==label2) else 0
-
-                loss = criterion(output1, output2, t)
-                loss.backward()
-                optimizer.step()
-
-                running_loss += loss.item()
-                if i%2000==1999:
-                    print("[%d, %5d] loss: %.3f" % (epoch+1, i+1, running_loss/2000))
-                    running_loss = 0.0
+                        loss = criterion(output1, output2, t=1)
+                        loss.backward()
+                        optimizer.step()
 
         print("Finish training")
         os.makedirs("net", exist_ok=True)
-        torch.save(net.state_dict(), "./net/Siamese.pt")
+        torch.save(net.state_dict(), "./net/assoc_Siamese.pt")
     else:
         # load network
-        net.load_state_dict(torch.load("./net/Siamese.pt"))
+        net.load_state_dict(torch.load("./net/assoc_Siamese.pt"))
 
     return net
 
 
 if __name__=="__main__":
-    assoc_siamese(filename="retail")
+    assoc_siamese(filename="retail", train=True)
 
