@@ -22,7 +22,7 @@ def mnist_siamese(train=False, epochs=3):
         optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
         # train network
-        for epoch in range(3):
+        for epoch in range(epochs):
             running_loss=0.0
             for i, data in enumerate(trainloader):
                 random.seed(random.randint(0, 3000))
@@ -53,7 +53,6 @@ def mnist_siamese(train=False, epochs=3):
         net.load_state_dict(torch.load("./net/Siamese.pt"))
 
     return net
-
 
 
 def mnist_convsiamese(train=False, epochs=3):
@@ -103,7 +102,7 @@ def mnist_convsiamese(train=False, epochs=3):
     return net
 
 
-def assoc_siamese(filename, train=False, epoch=3):
+def assoc_siamese(filename, train=False, epochs=3):
     # load dataset
     data = assoc(filename)
 
@@ -114,19 +113,19 @@ def assoc_siamese(filename, train=False, epoch=3):
         # I don't know good margin value.
         criterion = ContrastiveLoss(margin=2)
         optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+        transactions = data.get_trans() 
 
         # train network
-        for epoch in range(3):
-            for t in data.get_trans():
-                for i in range(len(t)):
+        for epoch in range(epochs):
+            for trans in transactions:
+                for i, item1 in enumerate(t):
+                    t_sub = trans[i+1:]
                     # get data
-                    item1 = t[i]
                     input1 = torch.from_numpy(data[item1]).float()
-                    for j in range(i+1, len(t)):
+                    for item2 in t_sub:
                         # initialize grad to 0.
                         optimizer.zero_grad()
 
-                        item2 = t[j]
                         input2 = torch.from_numpy(data[item2]).float()
                         output1, output2 = net(input1, input2)
 
