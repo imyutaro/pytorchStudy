@@ -27,16 +27,15 @@ class ConvSiamese(nn.Module):
     def __init__(self):
         super(ConvSiamese, self).__init__()
         self.conv = nn.Sequential(nn.Conv2d(1, 32, 5), nn.PReLU(),
-                                     nn.MaxPool2d(2, stride=2),
-                                     nn.Conv2d(32, 64, 5), nn.PReLU(),
-                                     nn.MaxPool2d(2, stride=2))
+                                  nn.MaxPool2d(2, stride=2),
+                                  nn.Conv2d(32, 64, 5), nn.PReLU(),
+                                  nn.MaxPool2d(2, stride=2))
 
         self.fc = nn.Sequential(nn.Linear(64 * 4 * 4, 256),
                                 nn.PReLU(),
                                 nn.Linear(256, 256),
                                 nn.PReLU(),
-                                nn.Linear(256, 2)
-                                )
+                                nn.Linear(256, 2))
 
     def forward(self, x1, x2):
         y1 = self.conv(x1)

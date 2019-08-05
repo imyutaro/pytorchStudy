@@ -115,10 +115,11 @@ def assoc_siamese(filename, train=False, epochs=3):
         optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
         transactions = data.get_trans() 
 
+        count = 0
         # train network
         for epoch in range(epochs):
             for trans in transactions:
-                for i, item1 in enumerate(t):
+                for i, item1 in enumerate(trans):
                     t_sub = trans[i+1:]
                     # get data
                     input1 = torch.from_numpy(data[item1]).float()
@@ -133,9 +134,14 @@ def assoc_siamese(filename, train=False, epochs=3):
                         loss.backward()
                         optimizer.step()
 
+            if count%1000==0:
+                print("Finished {count} transactions")
+
+            os.makedirs("net", exist_ok=True)
+            torch.save(net.state_dict(), f"./net/assoc_SiameseEpoch{epoch}.pt")
+            print(f"Finish epoch{epoch}")
+
         print("Finish training")
-        os.makedirs("net", exist_ok=True)
-        torch.save(net.state_dict(), "./net/assoc_Siamese.pt")
     else:
         # load network
         net.load_state_dict(torch.load("./net/assoc_Siamese.pt"))
