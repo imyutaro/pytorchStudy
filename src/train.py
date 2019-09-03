@@ -1,6 +1,7 @@
 import os
 import random
 random.seed(123)
+import time
 import torch
 import torch.optim as optim
 
@@ -111,7 +112,8 @@ def assoc_siamese(filename, train=False, epochs=3):
 
     if train:
         # I don't know good margin value.
-        criterion = ContrastiveLoss(margin=2)
+        # In triplet paper, margin is 0.2.
+        criterion = ContrastiveLoss(margin=0.2)
         optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
         transactions = data.get_trans() 
 
@@ -126,6 +128,7 @@ def assoc_siamese(filename, train=False, epochs=3):
                     # get data
                     input1 = torch.from_numpy(data[item1]).float()
                     time_2 = time.time()
+                    print(f"1-2: {time_2 - time_1}")
                     for item2 in t_sub:
                         # initialize grad to 0.
                         optimizer.zero_grad()
@@ -133,16 +136,18 @@ def assoc_siamese(filename, train=False, epochs=3):
                         input2 = torch.from_numpy(data[item2]).float()
                         output1, output2 = net(input1, input2)
                         time_3 = time.time()
+                        print(f"2-3: {time_3 - time_2}")
 
                         loss = criterion(output1, output2, t=1)
                         loss.backward()
                         time_4 = time.time()
+                        print(f"3-4: {time_4 - time_3}")
+
                         optimizer.step()
                         time_5 = time.time()
-                        print(f"1-2: {time_2 - time_1}")
-                        print(f"2-3: {time_3 - time_2}")
-                        print(f"3-4: {time_4 - time_3}")
                         print(f"4-5: {time_5 - time_4}")
+
+                count+=1
 
             if count%1000==0:
                 print("Finished {count} transactions")
