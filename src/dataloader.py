@@ -73,9 +73,8 @@ class assoc(Dataset):
     Load dataset for associoation anlysis.
     """
     
-    rootdir="../data/assoc/basic/"
-
-    def __init__(self, filename):
+    def __init__(self, filename, rootdir="../data/assoc/basic/"):
+        self.rootdir = rootdir
         self.filepath = os.path.join(self.rootdir, filename+".dat")
         with open(self.filepath) as f:
             self.data = [row.rstrip("\n").split() for row in f]
