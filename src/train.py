@@ -82,7 +82,7 @@ def mnist_convsiamese(train=False, epochs=3):
                 input1 = input1.unsqueeze(dim=0)
                 input2 = input2.unsqueeze(dim=0)
                 output1, output2 = net(input1, input2)
-                t= 1 if (label1==label2) else 0
+                t = 1 if (label1==label2) else 0
 
                 loss = criterion(output1, output2, t)
                 loss.backward()
@@ -122,30 +122,33 @@ def assoc_siamese(filename, train=False, epochs=3):
         for epoch in range(epochs):
             for trans in transactions:
                 for i, item1 in enumerate(trans):
-                    time_1 = time.time()
+                    time_0 = time.time()
                     t_sub = trans[i+1:]
+                    # print(f"length: {len(t_sub)}")
 
                     # get data
                     input1 = torch.from_numpy(data[item1]).float()
-                    time_2 = time.time()
-                    print(f"1-2: {time_2 - time_1}")
+                    time_1 = time.time()
+                    # print(f"0-1: {time_1 - time_0}")
                     for item2 in t_sub:
+                        time_2 = time.time()
+                        # print(f"1-2: {time_2 - time_1}") # take longest time
                         # initialize grad to 0.
                         optimizer.zero_grad()
 
                         input2 = torch.from_numpy(data[item2]).float()
                         output1, output2 = net(input1, input2)
                         time_3 = time.time()
-                        print(f"2-3: {time_3 - time_2}")
+                        # print(f"2-3: {time_3 - time_2}")
 
                         loss = criterion(output1, output2, t=1)
                         loss.backward()
                         time_4 = time.time()
-                        print(f"3-4: {time_4 - time_3}")
+                        # print(f"3-4: {time_4 - time_3}") # take long time
 
                         optimizer.step()
                         time_5 = time.time()
-                        print(f"4-5: {time_5 - time_4}")
+                        # print(f"4-5: {time_5 - time_4}")
 
                 count+=1
 
@@ -165,5 +168,5 @@ def assoc_siamese(filename, train=False, epochs=3):
 
 
 if __name__=="__main__":
-    assoc_siamese(filename="retail", train=True, epochs=1)
+    assoc_siamese(filename="T10I4D100K", train=True, epochs=1)
 
