@@ -2,6 +2,7 @@ import os
 import random
 random.seed(123)
 import time
+import tqdm
 import torch
 import torch.optim as optim
 
@@ -120,7 +121,7 @@ def assoc_siamese(filename, train=False, epochs=3):
         count = 0
         # train network
         for epoch in range(epochs):
-            for trans in transactions:
+            for trans in tqdm.tqdm(transactions):
                 for i, item1 in enumerate(trans):
                     time_0 = time.time()
                     t_sub = trans[i+1:]
@@ -153,7 +154,7 @@ def assoc_siamese(filename, train=False, epochs=3):
                 count+=1
 
             if count%1000==0:
-                print("Finished {count} transactions")
+                print(f"Finished {count} transactions")
 
             os.makedirs("net", exist_ok=True)
             torch.save(net.state_dict(), f"./net/assoc_SiameseEpoch{epoch}.pt")
@@ -168,5 +169,5 @@ def assoc_siamese(filename, train=False, epochs=3):
 
 
 if __name__=="__main__":
-    assoc_siamese(filename="T10I4D100K", train=True, epochs=1)
+    assoc_siamese(filename="T10I4D100K", train=True, epochs=10)
 
