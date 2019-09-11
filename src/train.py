@@ -2,6 +2,7 @@ import os
 import random
 random.seed(123)
 import time
+import datetime
 import tqdm
 import torch
 import torch.optim as optim
@@ -112,6 +113,9 @@ def assoc_siamese(filename, train=False, epochs=3):
     net = Siamese(nItem=data.item_len(), mid_dim=2)
 
     if train:
+        today = str(datetime.date.today())
+        saved_folder = os.path.join("net", filename, today)
+
         # I don't know good margin value.
         # In triplet paper, margin is 0.2.
         criterion = ContrastiveLoss(margin=0.2)
@@ -156,8 +160,9 @@ def assoc_siamese(filename, train=False, epochs=3):
             if count%1000==0:
                 print(f"Finished {count} transactions")
 
-            os.makedirs("net", exist_ok=True)
-            torch.save(net.state_dict(), f"./net/assoc_SiameseEpoch{epoch}.pt")
+            os.makedirs(saved_folder, exist_ok=True)
+            saved_folder += f"/assoc_SiameseEpoch{epoch}.pt")
+            torch.save(net.state_dict(), saved_folder)
             print(f"Finish epoch{epoch}")
 
         print("Finish training")
