@@ -1,3 +1,8 @@
+dataset repositries
+- [FIMI](http://fimi.uantwerpen.be/data/)
+- [SPMF | An Open-Source Data Mining Library](http://www.philippe-fournier-viger.com/spmf/index.php?link=datasets.php)
+- [Wilhelmiina Hämäläinen](http://www.cs.uef.fi/~whamalai/datasets.html)
+
 chess.dat
 connect.dat
 mushroom.dat
