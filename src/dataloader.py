@@ -1,3 +1,4 @@
+import torch
 from torchvision.datasets import MNIST
 from torchvision import transforms
 from torch.utils.data import Dataset, DataLoader
@@ -81,7 +82,7 @@ class assoc(Dataset):
 
         """Make item one-hot vector dictionary."""
         # set is much faster than list!!!
-        self.item= set()
+        self.item = set()
         for t in self.data:
             self.item.update(t, self.item)
 
@@ -96,6 +97,7 @@ class assoc(Dataset):
         return len(self.data) 
 
     def __getitem__(self, idx):
+        # return torch.tensor(self.one_hot_dict[idx])
         return self.one_hot_dict[idx]
 
     def get_trans(self):
