@@ -72,18 +72,27 @@ def imshow(img, i):
 class assoc(Dataset):
     """
     Load dataset for associoation anlysis.
+
+    Variables ---------
+    filename: data file name
+    rootdir: path to root directory which data is stored in
+    filepath: path to data
+    transactions: all transactions
+    item: all items
+    one_hot_dict: dictionary about which item is which one hot vector
+    -------------------
     """
     
     def __init__(self, filename, rootdir="../data/assoc/basic/"):
         self.rootdir = rootdir
         self.filepath = os.path.join(self.rootdir, filename+".dat")
         with open(self.filepath) as f:
-            self.data = [row.rstrip("\n").split() for row in f]
+            self.transactions = [row.rstrip("\n").split() for row in f]
 
         """Make item one-hot vector dictionary."""
         # set is much faster than list!!!
         self.item = set()
-        for t in self.data:
+        for t in self.transactions:
             self.item.update(t, self.item)
 
         self.one_hot_dict = OrderedDict() 
@@ -94,7 +103,7 @@ class assoc(Dataset):
 
     def __len__(self):
         """Length is the number of transactions."""
-        return len(self.data) 
+        return len(self.transactions) 
 
     def __getitem__(self, idx):
         # return torch.tensor(self.one_hot_dict[idx])
@@ -102,7 +111,7 @@ class assoc(Dataset):
 
     def get_trans(self):
         """Return transaction data"""
-        return self.data
+        return self.transactions
 
     def item_len(self):
         """Return the number of items without duplicate."""
