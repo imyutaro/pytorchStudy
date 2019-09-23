@@ -4,9 +4,11 @@ __pycache__/
 /data/assoc/*
 !/data/assoc/basic/
 tmp/
+tmp*/
 tmp.*
 tmp*.*
 *.tmp
+*.output
 
 *.png
 .*
