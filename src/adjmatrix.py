@@ -6,7 +6,7 @@ import numpy as np
 
 def make_adj(num_items, itemset, transactions):
 
-    adjMatrix = np.zeros((num_items, num_items), dtype="float32")
+    adjMatrix = np.zeros((num_items, num_items), dtype=np.float32)
 
     for t in tqdm.tqdm(transactions):
         for i, item1 in enumerate(t):
@@ -17,7 +17,7 @@ def make_adj(num_items, itemset, transactions):
                 idx2 = itemset.index(item2)
                 adjMatrix[idx1][idx2] += 1
 
-    return adjMatrix.astype("int8")
+    return adjMatrix.astype(np.int32)
 
 if __name__=="__main__":
     from dataloader import assoc 
