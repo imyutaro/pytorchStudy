@@ -114,7 +114,7 @@ def assoc_siamese(filename, train=False, epochs=3):
 
     if train:
         today = str(datetime.date.today())
-        saved_folder = os.path.join("net", filename, today)
+        save_dir = os.path.join("net", filename, today)
 
         # I don't know good margin value.
         # In triplet paper, margin is 0.2.
@@ -160,9 +160,9 @@ def assoc_siamese(filename, train=False, epochs=3):
             if count%1000==0:
                 print(f"Finished {count} transactions")
 
-            os.makedirs(saved_folder, exist_ok=True)
-            saved_folder += f"/assoc_SiameseEpoch{epoch}.pt")
-            torch.save(net.state_dict(), saved_folder)
+            os.makedirs(save_dir, exist_ok=True)
+            save_dir += f"/assoc_SiameseEpoch{epoch}.pt")
+            torch.save(net.state_dict(), save_dir)
             print(f"Finish epoch{epoch}")
 
         print("Finish training")

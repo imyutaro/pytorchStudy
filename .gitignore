@@ -3,10 +3,13 @@ __pycache__/
 !/data/assoc/
 /data/assoc/*
 !/data/assoc/basic/
+/adj/
 tmp/
+tmp*/
 tmp.*
 tmp*.*
 *.tmp
+*.output
 
 *.png
 .*
