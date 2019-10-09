@@ -39,7 +39,7 @@ if __name__=="__main__":
     adjMatrix = make_adj(num_items, itemset, transactions)
     print(adjMatrix)
 
-    save_dir = f"../adj/"
+    save_dir = "../adj/"
     os.makedirs(save_dir, exist_ok=True)
     np.save(f"{save_dir+filename}", adjMatrix)
     f_time = time.time()
